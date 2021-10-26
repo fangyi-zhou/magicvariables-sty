@@ -1,0 +1,31 @@
+\usepackage{xifthen}
+
+\newcommand{\ifempty}[3]{%
+  \ifthenelse{\isempty{#1}}{#2}{#3}%
+}
+
+% \makeVar and friends take the following arguments
+% (1) the name of the command to be made (e.g. gtG), without backslash
+% (2) the format macro to be used (e.g. gtFmt), without backslash
+% (3) the variable itself (e.g. G)
+% the resulting macro be like
+% \newcommand{\gtG}[1][]{%
+%   \ifempty{#1}{\gtFmt{G}}{\gtFmt{G_{#1}}}%
+% }
+\newcommand{\makeVar}[3]{%
+  \expandafter\newcommand\csname #1\endcsname[1][]{%
+    \ifempty{##1}{\expandafter\csname #2\endcsname{#3}}{\expandafter\csname #2\endcsname{#3_{##1}}}
+  }
+}
+\newcommand{\makeVari}[3]{%
+\expandafter\newcommand\csname #1\endcsname[1][]{%
+\ifempty{##1}{\expandafter\csname #2\endcsname{#3'}}{\expandafter\csname #2\endcsname{#3'_{##1}}}
+}
+}
+\newcommand{\makeVarii}[3]{%
+\expandafter\newcommand\csname #1\endcsname[1][]{%
+\ifempty{##1}{\expandafter\csname #2\endcsname{#3''}}{\expandafter\csname #2\endcsname{#3''_{##1}}}
+}
+}
+
+\newcommand{\noFmt}[1]{#1}

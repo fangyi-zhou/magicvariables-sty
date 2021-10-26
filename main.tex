@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\usepackage{magicvariables}
+\makeVar{x}{noFmt}{x}
+\makeVari{xx}{noFmt}{x}
+\makeVar{boldX}{mathbf}{x}
+\makeVari{boldXx}{mathbf}{x}
+
+\title{Magic Variables}
+\author{Fangyi Zhou}
+\begin{document}
+\maketitle
+\section{Usage}
+
+\verb+\makeVar{x}{noFmt}{x}+ defines the macro \verb+\x+ with \verb+\noFmt+
+formatting macro, with content \verb+x+.
+\verb+\makeVar{boldX}{mathbf}{x}+ defines the macro \verb+\boldX+ with
+\verb+\mathbf+ formatting macro, with content \verb+x+.
+
+$\x$ is a normal x, $\boldX$ is a bold x.
+
+$\xx$ is a normal x prime, $\boldXx$ is a bold x prime.
+
+\verb+\makeVari{xx}{noFmt}{x}+ defines the macro \verb+\xx+ with \verb+\noFmt+
+formatting macro, with content \verb+x+, with a prime superscript.
+\verb+\makeVari{boldXx}{mathbf}{x}+ defines the macro \verb+\boldXx+ with
+\verb+\mathbf+ formatting macro, with content \verb+x+, with a prime
+superscript.
+
+$\x[0]$ is a normal x with subscript, $\boldX[0]$ is a bold x with subscript.
+
+$\xx[0]$ is a normal x prime with subscript, $\boldXx[0]$ is a bold x prime
+with subscript.
+
+\section*{Acknowledgement}
+
+Thanks Alceste Scalas for the original macro design, the author simply added
+automation in making the variables.
+
+\end{document}
