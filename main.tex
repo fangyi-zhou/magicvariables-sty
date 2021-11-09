@@ -5,6 +5,8 @@
 \makeVari{xx}{noFmt}{x}
 \makeVar{boldX}{mathbf}{x}
 \makeVari{boldXx}{mathbf}{x}
+\makeVar{sfX}{textsf}{x}
+\makeVari{sfXx}{textsf}{x}
 
 \title{Magic Variables}
 \author{Fangyi Zhou}
@@ -31,6 +33,15 @@ $\x[0]$ is a normal x with subscript, $\boldX[0]$ is a bold x with subscript.
 
 $\xx[0]$ is a normal x prime with subscript, $\boldXx[0]$ is a bold x prime
 with subscript.
+
+Note: the macros still works if a text formatting macro is used, e.g.\
+\verb+\makeVar{sfX}{textsf}{x}+ uses a text formatting macro.
+
+$\sfX$ is a serif x, $\sfXx$ is a serif x prime.
+
+$\sfX[i]$ is a serif x with subscript, $\sfXx[i]$ is a serif x prime with
+subscript.
+The subscript is rendered in maths font instead of the text formatting macro.
 
 \section*{Acknowledgement}
 
