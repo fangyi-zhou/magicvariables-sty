@@ -1,0 +1,159 @@
+% \iffalse meta-comment
+% This is free and unencumbered software released into the public domain.
+%
+% Anyone is free to copy, modify, publish, use, compile, sell, or
+% distribute this software, either in source code form or as a compiled
+% binary, for any purpose, commercial or non-commercial, and by any
+% means.
+%
+% In jurisdictions that recognize copyright laws, the author or authors
+% of this software dedicate any and all copyright interest in the
+% software to the public domain. We make this dedication for the benefit
+% of the public at large and to the detriment of our heirs and
+% successors. We intend this dedication to be an overt act of
+% relinquishment in perpetuity of all present and future rights to this
+% software under copyright law.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+% EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+% OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+% ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+% OTHER DEALINGS IN THE SOFTWARE.
+%
+% For more information, please refer to <https://unlicense.org>
+% \fi
+
+% \iffalse
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{magicvariables}[2022/02/03 v0.1 Initial version]
+%<package>\RequirePackage{xifthen}
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage[scale=0.85]{FiraMono}
+\usepackage{FiraSans}
+\usepackage{magicvariables}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{magicvariables.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \GetFileInfo{magicvariables.sty}
+%
+% \makeVar{x}{noFmt}{x}
+% \makeVari{xx}{noFmt}{x}
+% \makeVar{boldX}{mathbf}{x}
+% \makeVari{boldXx}{mathbf}{x}
+% \makeVar{sfX}{textsf}{x}
+% \makeVari{sfXx}{textsf}{x}
+%
+% \title{Magic Variables}
+% \author{Fangyi Zhou}
+% \maketitle
+
+% \section{Usage}
+% \verb+\makeVar{x}{noFmt}{x}+ defines the macro \verb+\x+ with \verb+\noFmt+
+% formatting macro, with content \verb+x+.
+% \verb+\makeVar{boldX}{mathbf}{x}+ defines the macro \verb+\boldX+ with
+% \verb+\mathbf+ formatting macro, with content \verb+x+.
+%
+% $\x$ is a normal x, $\boldX$ is a bold x.
+%
+% $\xx$ is a normal x prime, $\boldXx$ is a bold x prime.
+%
+% \verb+\makeVari{xx}{noFmt}{x}+ defines the macro \verb+\xx+ with \verb+\noFmt+
+% formatting macro, with content \verb+x+, with a prime superscript.
+% \verb+\makeVari{boldXx}{mathbf}{x}+ defines the macro \verb+\boldXx+ with
+% \verb+\mathbf+ formatting macro, with content \verb+x+, with a prime
+% superscript.
+%
+% $\x[0]$ is a normal x with subscript, $\boldX[0]$ is a bold x with subscript.
+%
+% $\xx[0]$ is a normal x prime with subscript, $\boldXx[0]$ is a bold x prime
+% with subscript.
+%
+% Note: the macros still works if a text formatting macro is used, e.g.\
+% \verb+\makeVar{sfX}{textsf}{x}+ uses a text formatting macro.
+%
+% $\sfX$ is a serif x, $\sfXx$ is a serif x prime.
+%
+% $\sfX[i]$ is a serif x with subscript, $\sfXx[i]$ is a serif x prime with
+% subscript.
+% The subscript is rendered in maths font instead of the text formatting macro.
+%
+%
+% \section{Implementation}
+%    \begin{macrocode}
+\newcommand{\ifempty}[3]{
+  \ifthenelse{\isempty{#1}}{#2}{#3}
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\makeVar}[3]{
+  \expandafter\newcommand\csname #1\endcsname[1][]{
+    \ifempty{##1}{
+      \expandafter\csname #2\endcsname{#3}
+    }{
+      \expandafter\csname #2\endcsname{{#3}\ensuremath{_{##1}}}
+    }
+  }
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\makeVari}[3]{
+  \expandafter\newcommand\csname #1\endcsname[1][]{
+    \ifempty{##1}{
+      \expandafter\csname #2\endcsname{#3'}
+    }{
+      \expandafter\csname #2\endcsname{{#3}\ensuremath{'_{##1}}}
+    }
+  }
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\makeVarii}[3]{
+  \expandafter\newcommand\csname #1\endcsname[1][]{
+    \ifempty{##1}{
+      \expandafter\csname #2\endcsname{#3''}
+    }{
+      \expandafter\csname #2\endcsname{{#3}\ensuremath{''_{##1}}}
+    }
+  }
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\noFmt}[1]{#1}
+%    \end{macrocode}
+%
+% \section*{Acknowledgement}
+%
+% Thanks Alceste Scalas for the original macro design, the author simply added
+% automation in making the variables.
+%
+% \Finale
