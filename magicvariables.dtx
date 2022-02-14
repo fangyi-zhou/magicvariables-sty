@@ -27,7 +27,7 @@
 
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}
-%<package>\ProvidesPackage{magicvariables}[2022/02/03 v0.1 Initial version]
+%<package>\ProvidesPackage{magicvariables}[2022/02/14 v0.2 Hide an internal macro]
 %<package>\RequirePackage{xifthen}
 %<*driver>
 \documentclass{ltxdoc}
@@ -109,15 +109,16 @@
 %
 %
 % \section{Implementation}
+% \changes{0.2}{2022/02/14}{Make ifempty internal}
 %    \begin{macrocode}
-\newcommand{\ifempty}[3]{
+\newcommand{\magicvar@ifempty}[3]{
   \ifthenelse{\isempty{#1}}{#2}{#3}
 }
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\makeVar}[3]{
   \expandafter\newcommand\csname #1\endcsname[1][]{
-    \ifempty{##1}{
+    \magicvar@ifempty{##1}{
       \expandafter\csname #2\endcsname{#3}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{_{##1}}}
@@ -128,7 +129,7 @@
 %    \begin{macrocode}
 \newcommand{\makeVari}[3]{
   \expandafter\newcommand\csname #1\endcsname[1][]{
-    \ifempty{##1}{
+    \magicvar@ifempty{##1}{
       \expandafter\csname #2\endcsname{#3'}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{'_{##1}}}
@@ -139,7 +140,7 @@
 %    \begin{macrocode}
 \newcommand{\makeVarii}[3]{
   \expandafter\newcommand\csname #1\endcsname[1][]{
-    \ifempty{##1}{
+    \magicvar@ifempty{##1}{
       \expandafter\csname #2\endcsname{#3''}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{''_{##1}}}

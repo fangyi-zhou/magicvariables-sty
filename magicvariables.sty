@@ -33,15 +33,15 @@
 %% For more information, please refer to <https://unlicense.org>
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{magicvariables}[2022/02/03 v0.1 Initial version]
+\ProvidesPackage{magicvariables}[2022/02/14 v0.2 Hide an internal macro]
 \RequirePackage{xifthen}
 
-\newcommand{\ifempty}[3]{
+\newcommand{\magicvar@ifempty}[3]{
   \ifthenelse{\isempty{#1}}{#2}{#3}
 }
 \newcommand{\makeVar}[3]{
   \expandafter\newcommand\csname #1\endcsname[1][]{
-    \ifempty{##1}{
+    \magicvar@ifempty{##1}{
       \expandafter\csname #2\endcsname{#3}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{_{##1}}}
@@ -50,7 +50,7 @@
 }
 \newcommand{\makeVari}[3]{
   \expandafter\newcommand\csname #1\endcsname[1][]{
-    \ifempty{##1}{
+    \magicvar@ifempty{##1}{
       \expandafter\csname #2\endcsname{#3'}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{'_{##1}}}
@@ -59,7 +59,7 @@
 }
 \newcommand{\makeVarii}[3]{
   \expandafter\newcommand\csname #1\endcsname[1][]{
-    \ifempty{##1}{
+    \magicvar@ifempty{##1}{
       \expandafter\csname #2\endcsname{#3''}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{''_{##1}}}
