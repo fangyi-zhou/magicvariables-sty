@@ -36,6 +36,7 @@
 \usepackage[scale=0.85]{FiraMono}
 \usepackage{FiraSans}
 \usepackage[a4paper, margin=3cm]{geometry}
+\usepackage{indentfirst}
 \usepackage{magicvariables}
 \EnableCrossrefs
 \CodelineIndex
@@ -79,38 +80,48 @@
 % \maketitle
 
 % \section{Usage}
-% \verb+\makeVar{x}{noFmt}{x}+ defines the macro \verb+\x+ with \verb+\noFmt+
-% formatting macro, with content \verb+x+.
-% \verb+\makeVar{boldX}{mathbf}{x}+ defines the macro \verb+\boldX+ with
+%
+% This package provides macros \verb+\makeVar+, \verb+\makeVari+,
+% \verb+\makeVarii+, and \verb+\makeVariii+ to automatically create new macros
+% for typesetting maths with subscripts.
+%
+% \subsection{Declaring Macros}
+% \verb+\makeVar{x}{noFmt}{x}+ defines a macro \verb+\x+ with \verb+\noFmt+
+% formatting macro (i.e.~noop), with content \verb+x+.
+% \verb+\makeVar{boldX}{mathbf}{x}+ defines a macro \verb+\boldX+ with
 % \verb+\mathbf+ formatting macro, with content \verb+x+.
 %
-% $\x$ is a normal x, $\boldX$ is a bold x.
-%
-% $\xx$ is a normal x prime, $\boldXx$ is a bold x prime.
-%
-% \verb+\makeVari{xx}{noFmt}{x}+ defines the macro \verb+\xx+ with \verb+\noFmt+
+% \verb+\makeVari{xx}{noFmt}{x}+ defines a macro \verb+\xx+ with \verb+\noFmt+
 % formatting macro, with content \verb+x+, with a prime superscript.
-% \verb+\makeVari{boldXx}{mathbf}{x}+ defines the macro \verb+\boldXx+ with
+% \verb+\makeVari{boldXx}{mathbf}{x}+ defines a macro \verb+\boldXx+ with
 % \verb+\mathbf+ formatting macro, with content \verb+x+, with a prime
 % superscript.
-%
-% $\x[0]$ is a normal x with subscript, $\boldX[0]$ is a bold x with subscript.
-%
-% $\xx[0]$ is a normal x prime with subscript, $\boldXx[0]$ is a bold x prime
-% with subscript.
-%
-% Note: the macros still works if a text formatting macro is used, e.g.\
-% \verb+\makeVar{sfX}{textsf}{x}+ uses a text formatting macro.
-%
-% $\sfX$ is a serif x, $\sfXx$ is a serif x prime.
-%
-% $\sfX[i]$ is a serif x with subscript, $\sfXx[i]$ is a serif x prime with
-% subscript.
-% The subscript is rendered in maths font instead of the text formatting macro.
 %
 % Macros \verb+\makeVarii+ and \verb+\makeVariii+ appends 2 primes and 3 primes
 % respectively.
 %
+% Note: the macros still works if a text formatting macro is used, e.g.\
+% \verb+\makeVar{sfX}{textsf}{x}+ uses a text formatting macro.
+%
+% \subsection{Using Declared Macros}
+% The macro \verb+\x+ (defined via \verb+\makeVar{x}{noFmt}{x}+) typesets a
+% normal $x$ without subscript: $\x$,
+% and \verb+\x[0]+ typesets a
+% normal $x$ with subscript $0$: $\x[0]$.
+%
+% Similarly, the macro \verb+\boldX+ (defined via
+% \verb+\makeVar{boldX}{mathbf}{x}+) typesets a bold $x$ (by applying
+% \verb+\mathbf+): $\boldX$,
+% and \verb+\boldX[0]+ with subscript $0$: $\boldX[0]$.
+%
+% For primed versions,
+% the macro \verb+\xx+ (defined via \verb+\makeVari{xx}{noFmt}{x}+) typesets a
+% normal $x$ (primed) without subscript: $\xx$,
+% and \verb+\xx[0]+ typesets a
+% normal $x$ (primed) with subscript $0$: $\xx[0]$.
+%
+% Similarly, the macro \verb+\boldXx+ typesets a bold $x$ (primed): $\boldXx$,
+% and \verb+\boldXx[0]+ (primed) with subscript $0$: $\boldXx[0]$.
 %
 % \section{Implementation}
 % \changes{0.2}{2022/02/14}{Make ifempty internal}
