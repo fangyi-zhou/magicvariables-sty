@@ -33,7 +33,7 @@
 %% For more information, please refer to <https://unlicense.org>
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{magicvariables}[2022/02/14 v0.2 Hide an internal macro]
+\ProvidesPackage{magicvariables}[2022/02/16 v0.3 Add makeVariii]
 \RequirePackage{xifthen}
 
 \newcommand{\magicvar@ifempty}[3]{
@@ -63,6 +63,15 @@
       \expandafter\csname #2\endcsname{#3''}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{''_{##1}}}
+    }
+  }
+}
+\newcommand{\makeVariii}[3]{
+  \expandafter\newcommand\csname #1\endcsname[1][]{
+    \magicvar@ifempty{##1}{
+      \expandafter\csname #2\endcsname{#3'''}
+    }{
+      \expandafter\csname #2\endcsname{{#3}\ensuremath{'''_{##1}}}
     }
   }
 }

@@ -27,7 +27,7 @@
 
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}
-%<package>\ProvidesPackage{magicvariables}[2022/02/14 v0.2 Hide an internal macro]
+%<package>\ProvidesPackage{magicvariables}[2022/02/16 v0.3 Add makeVariii]
 %<package>\RequirePackage{xifthen}
 %<*driver>
 \documentclass{ltxdoc}
@@ -108,6 +108,9 @@
 % subscript.
 % The subscript is rendered in maths font instead of the text formatting macro.
 %
+% Macros \verb+\makeVarii+ and \verb+\makeVariii+ appends 2 primes and 3 primes
+% respectively.
+%
 %
 % \section{Implementation}
 % \changes{0.2}{2022/02/14}{Make ifempty internal}
@@ -145,6 +148,18 @@
       \expandafter\csname #2\endcsname{#3''}
     }{
       \expandafter\csname #2\endcsname{{#3}\ensuremath{''_{##1}}}
+    }
+  }
+}
+%    \end{macrocode}
+% \changes{0.3}{2022/02/16}{Add makeVariii}
+%    \begin{macrocode}
+\newcommand{\makeVariii}[3]{
+  \expandafter\newcommand\csname #1\endcsname[1][]{
+    \magicvar@ifempty{##1}{
+      \expandafter\csname #2\endcsname{#3'''}
+    }{
+      \expandafter\csname #2\endcsname{{#3}\ensuremath{'''_{##1}}}
     }
   }
 }
