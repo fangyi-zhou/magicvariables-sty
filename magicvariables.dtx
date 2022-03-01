@@ -27,7 +27,7 @@
 
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}
-%<package>\ProvidesPackage{magicvariables}[2022/02/16 v0.3 Add makeVariii]
+%<package>\ProvidesPackage{magicvariables}[2022/03/01 v0.4 Add makeVars]
 %<package>\RequirePackage{xifthen}
 %<*driver>
 \documentclass{ltxdoc}
@@ -74,6 +74,7 @@
 % \makeVari{boldXx}{mathbf}{x}
 % \makeVar{sfX}{textsf}{x}
 % \makeVari{sfXx}{textsf}{x}
+% \makeVars{y}{noFmt}{y}
 %
 % \title{Magic Variables}
 % \author{Fangyi Zhou}
@@ -102,6 +103,11 @@
 %
 % Note: the macros still works if a text formatting macro is used, e.g.\
 % \verb+\makeVar{sfX}{textsf}{x}+ uses a text formatting macro.
+%
+% Macro \verb+\makeVars+ creates all variants of the macro at once, e.g.\
+% \verb+\makeVars{y}{noFmt}{y}+ creates macros \verb+\y+ ($\y$), \verb+\yi+
+% ($\yi$), \verb+\yii+ ($\yii$), and \verb+\yiii+ ($\yiii$) with a single
+% command.
 %
 % \subsection{Using Declared Macros}
 % The macro \verb+\x+ (defined via \verb+\makeVar{x}{noFmt}{x}+) typesets a
@@ -177,6 +183,15 @@
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\noFmt}[1]{#1}
+%    \end{macrocode}
+% \changes{0.4}{2022/03/01}{Add makeVars}
+%    \begin{macrocode}
+\newcommand{\makeVars}[3]{
+    \makeVar{#1}{#2}{#3}
+    \makeVari{#1i}{#2}{#3}
+    \makeVarii{#1ii}{#2}{#3}
+    \makeVariii{#1iii}{#2}{#3}
+}
 %    \end{macrocode}
 %
 % \section*{Acknowledgement}
