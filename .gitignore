@@ -299,4 +299,6 @@ TSWLatexianTemp*
 # End of https://www.toptal.com/developers/gitignore/api/tex
 
 magicvariables.pdf
+magicvariables.zip
+magicvariables/*
 
