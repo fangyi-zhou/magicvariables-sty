@@ -27,7 +27,7 @@
 
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}
-%<package>\ProvidesPackage{magicvariables}[2022/03/01 v0.5 Remove redundant spaces]
+%<package>\ProvidesPackage{magicvariables}[2022/07/22 v0.6 Allow leading backslash in first argument]
 %<package>\RequirePackage{xifthen}
 %<*driver>
 \documentclass{ltxdoc}
@@ -109,6 +109,9 @@
 % ($\yi$), \verb+\yii+ ($\yii$), and \verb+\yiii+ ($\yiii$) with a single
 % command.
 %
+% Note, the first argument now can contain backslashes, e.g.
+% \verb+\makeVar{\x}{noFmt}{x}+, for better searchability.
+%
 % \subsection{Using Declared Macros}
 % The macro \verb+\x+ (defined via \verb+\makeVar{x}{noFmt}{x}+) typesets a
 % normal $x$ without subscript: $\x$,
@@ -131,14 +134,19 @@
 %
 % \section{Implementation}
 % \changes{0.2}{2022/02/14}{Make ifempty internal}
+% \changes{0.6}{2022/07/22}{Allow backslash in the first argument}
 %    \begin{macrocode}
+% https://tex.stackexchange.com/questions/42318/removing-a-backslash-from-a-character-sequence
+\begingroup\lccode`\|=`\\
+\lowercase{\endgroup\def\removebs#1{\if#1|\else#1\fi}}
+\newcommand{\magicvar@unslash}[1]{\expandafter\removebs\string#1}
 \newcommand{\magicvar@ifempty}[3]{%
   \ifthenelse{\isempty{#1}}{#2}{#3}%
 }%
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\makeVar}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3}%
     }{%
@@ -149,7 +157,7 @@
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\makeVari}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3'}%
     }{%
@@ -160,7 +168,7 @@
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\makeVarii}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3''}%
     }{%
@@ -172,7 +180,7 @@
 % \changes{0.3}{2022/02/16}{Add makeVariii}
 %    \begin{macrocode}
 \newcommand{\makeVariii}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3'''}%
     }{%

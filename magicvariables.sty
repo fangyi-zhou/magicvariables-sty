@@ -33,14 +33,17 @@
 %% For more information, please refer to <https://unlicense.org>
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{magicvariables}[2022/03/01 v0.5 Remove redundant spaces]
+\ProvidesPackage{magicvariables}[2022/07/22 v0.6 Allow leading backslash in first argument]
 \RequirePackage{xifthen}
 
+\begingroup\lccode`\|=`\\
+\lowercase{\endgroup\def\removebs#1{\if#1|\else#1\fi}}
+\newcommand{\magicvar@unslash}[1]{\expandafter\removebs\string#1}
 \newcommand{\magicvar@ifempty}[3]{%
   \ifthenelse{\isempty{#1}}{#2}{#3}%
 }%
 \newcommand{\makeVar}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3}%
     }{%
@@ -49,7 +52,7 @@
   }%
 }%
 \newcommand{\makeVari}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3'}%
     }{%
@@ -58,7 +61,7 @@
   }%
 }%
 \newcommand{\makeVarii}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3''}%
     }{%
@@ -67,7 +70,7 @@
   }%
 }%
 \newcommand{\makeVariii}[3]{%
-  \expandafter\newcommand\csname #1\endcsname[1][]{%
+  \expandafter\newcommand\csname \magicvar@unslash{#1}\endcsname[1][]{%
     \magicvar@ifempty{##1}{%
       \expandafter\csname #2\endcsname{#3'''}%
     }{%
